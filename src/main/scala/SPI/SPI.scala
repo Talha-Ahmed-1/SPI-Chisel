@@ -16,6 +16,11 @@ class SPI_IO extends Bundle{
     val in = Flipped(Decoupled(UInt(1.W)))
 }
 
+class Buffer_IO extends Bundle{
+    val out = Decoupled(UInt(1.W))
+    val in = Flipped(Decoupled(UInt(1.W)))
+}
+
 class Buffer extends Module{
     val io = IO(new Buffer_IO)
 
@@ -40,8 +45,10 @@ class Buffer extends Module{
     io.out.bits := DontCare
 }
 
-class Buffer_IO extends Bundle{
-    val out = Decoupled(UInt(1.W))
-    val in = Flipped(Decoupled(UInt(1.W)))
+class SPI extends Module{
+    val io = IO(new SPI_IO)
+    val buffer = Module(new Buffer)
 
+    buffer.io.in <> io.in
+    io.out <> buffer.io.out
 }
