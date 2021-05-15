@@ -12,7 +12,7 @@ class SPITests extends FreeSpec with ChiselScalatestTester {
 
   "SPI" in {
     test(new SPI).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
-        c.io.in.bits.poke(1.U)
+        c.io.in.bits.poke(3.U)
         c.io.in.valid.poke(1.B)
         c.io.out.ready.poke(1.B)
         c.clock.step(20)
