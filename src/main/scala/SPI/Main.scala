@@ -31,7 +31,6 @@ class BlackBoxAdder1 extends BlackBox with HasBlackBoxInline{
 
 class dummy extends Module{
     val io = IO (new Bundle() {
-        val ioo = Module(new BlackBoxAdder1)
     })
     val BBAdder = Module(new BlackBoxAdder1)
 
