@@ -41,55 +41,64 @@ class Buffer extends Module{
 class TxBuffer extends Buffer{}
 class RxBuffer extends Buffer{}
 
-// class RxShiftRegister extends Bundle{
-//     val out = Decoupled(UInt(4.W))
-//     val in = Flipped(Decoupled(UInt(4.W)))
-// }
+class RxShiftRegister_IO extends Bundle{
+    val out = Output(Bool())
+    val in = Input(UInt(4.W))
+}
 
-// class RxShiftRegister extends Module{
+class RxShiftRegister extends Module{
+    val io = IO(new RxShiftRegister_IO)
 
-// }
+    val state = RegInit(1.U(4.W))
+    val nextState = state << 1 | io.in
+    state := nextState
+    io.out := state
+}
 
 // class TxShiftRegister_IO extends Bundle{
-//     val out = Decoupled(Bool())
-//     val in = Flipped(Decoupled(UInt(4.W)))
+//     val out = Output(Bool())
+//     val in = Input(UInt(4.W))
 // }
 
 // class TxShiftRegister extends Module{
 //     val io = IO(new TxShiftRegister_IO)
 
-//     io.out.bits := 0.B
-//     io.out.valid := 1.B
-//     io.in.ready := 1.B
+//     io.out := 0.B
 //     val state = RegInit (0.U(4.W))
 //     val flag = RegInit(0.U(4.W))
 
 //     when (flag =/= 0.U){
-//         io.out.bits := state(0)
+//         io.out := state(0)
 //         state := state >> 1
 //     }.otherwise{
 //         flag := flag + 1.U
-//         state := io.in.bits
+//         state := io.in
 //     }
 // }
 
 class SPI_IO extends Bundle{
     val out = Decoupled(UInt(4.W))
     val in = Flipped(Decoupled(UInt(4.W)))
-    // val mosi = Decoupled(Bool())
+    // val mosi = Output(Bool())
+    val miso = Input(Bool())
+    val out1 = Output(UInt(4.W))
 
 }
 
 class SPI extends Module{
     val io = IO(new SPI_IO)
     // val buffer = Module(new Buffer)
-    val buffer = Module(new TxBuffer)
+    val buffer = Module(new RxBuffer)
     buffer.io.in <> io.in
     io.out <> buffer.io.out
 
+    val RxSR = Module(new RxShiftRegister)
+    buffer.io.in.bits := RxSR.io.out
+    io.out1 := buffer.io.out.bits
+
+
     // val TxSR = Module(new TxShiftRegister)
-    // TxSR.io.in.bits <> buffer.io.out.bits
-    // TxSR.io.in.valid <> buffer.io.out.valid
-    // io.mosi <> TxSR.io.out
+    // TxSR.io.in := buffer.io.out.bits
+    // io.mosi := TxSR.io.out
 
 }

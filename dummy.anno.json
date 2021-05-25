@@ -1,0 +1,34 @@
+[
+  {
+    "class":"firrtl.transforms.DedupedResult",
+    "original":"~dummy|BlackBoxAdder",
+    "duplicate":"~dummy|dummy/io_ioo:BlackBoxAdder",
+    "index":0.0
+  },
+  {
+    "class":"firrtl.transforms.DedupedResult",
+    "original":"~dummy|BlackBoxAdder_1",
+    "duplicate":"~dummy|dummy/io_ioo_1:BlackBoxAdder",
+    "index":0.3333333333333333
+  },
+  {
+    "class":"firrtl.transforms.DedupedResult",
+    "original":"~dummy|BlackBoxAdder_2",
+    "duplicate":"~dummy|dummy/BBAdder:BlackBoxAdder",
+    "index":0.6666666666666666
+  },
+  {
+    "class":"firrtl.EmitCircuitAnnotation",
+    "emitter":"firrtl.VerilogEmitter"
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxInlineAnno",
+    "target":"dummy.BlackBoxAdder",
+    "name":"BlackBoxAdder.v",
+    "text":"\n module BlackBoxAdder (\n input [32:0] in1 ,\n input [32:0] in2 ,\n output [33:0] out\n) ;\n always @* begin\n out <= ((in1) + (in2));\n end\n endmodule\n    "
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxTargetDirAnno",
+    "targetDir":"."
+  }
+]
