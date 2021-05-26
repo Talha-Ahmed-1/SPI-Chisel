@@ -1,44 +1,56 @@
 ;buildInfoPackage: chisel3, version: 3.4.3, scalaVersion: 2.12.12, sbtVersion: 1.3.10
 circuit dummy : 
-  extmodule BlackBoxAdder : 
-    input in1 : UInt<32>
-    input in2 : UInt<32>
-    output out : UInt<33>
+  extmodule BlackBoxSpi : 
+    input i_clk : UInt<1>
+    input i_reset : UInt<1>
+    input i_wb_cyc : UInt<1>
+    input i_wb_stb : UInt<1>
+    input i_cfg_stb : UInt<1>
+    input i_wb_we : UInt<1>
+    input i_wb_adder : SInt<21>
+    input i_wb_data : SInt<32>
+    output o_wb_stall : UInt<1>
+    output o_wb_ack : UInt<1>
+    input o_wb_data : SInt<32>
+    output o_spi_cs_n : UInt<1>
+    output o_spi_sck : UInt<1>
+    output o_spi_mosi : UInt<1>
     
-    defname = BlackBoxAdder
-    
-    
-  extmodule BlackBoxAdder_1 : 
-    input in1 : UInt<32>
-    input in2 : UInt<32>
-    output out : UInt<33>
-    
-    defname = BlackBoxAdder
-    
-    
-  extmodule BlackBoxAdder_2 : 
-    input in1 : UInt<32>
-    input in2 : UInt<32>
-    output out : UInt<33>
-    
-    defname = BlackBoxAdder
+    defname = BlackBoxSpi
     
     
   module dummy : 
     input clock : Clock
     input reset : UInt<1>
-    output io : {}
+    output io : {flip i_clk : UInt<1>, flip i_reset : UInt<1>, flip i_wb_cyc : UInt<1>, flip i_wb_stb : UInt<1>, flip i_cfg_stb : UInt<1>, flip i_wb_we : UInt<1>, flip i_wb_adder : SInt<21>, flip i_wb_data : SInt<32>, o_wb_stall : UInt<1>, o_wb_ack : UInt<1>, flip o_wb_data : SInt<32>, o_spi_cs_n : UInt<1>, o_spi_sck : UInt<1>, o_spi_mosi : UInt<1>}
     
-    inst io_ioo of BlackBoxAdder @[Main.scala 34:25]
-    io_ioo.out is invalid
-    io_ioo.in2 is invalid
-    io_ioo.in1 is invalid
-    inst io_ioo_1 of BlackBoxAdder_1 @[Main.scala 34:25]
-    io_ioo_1.out is invalid
-    io_ioo_1.in2 is invalid
-    io_ioo_1.in1 is invalid
-    inst BBAdder of BlackBoxAdder_2 @[Main.scala 36:25]
-    BBAdder.out is invalid
-    BBAdder.in2 is invalid
-    BBAdder.in1 is invalid
+    inst SPI of BlackBoxSpi @[Main.scala 34:21]
+    SPI.o_spi_mosi is invalid
+    SPI.o_spi_sck is invalid
+    SPI.o_spi_cs_n is invalid
+    SPI.o_wb_data is invalid
+    SPI.o_wb_ack is invalid
+    SPI.o_wb_stall is invalid
+    SPI.i_wb_data is invalid
+    SPI.i_wb_adder is invalid
+    SPI.i_wb_we is invalid
+    SPI.i_cfg_stb is invalid
+    SPI.i_wb_stb is invalid
+    SPI.i_wb_cyc is invalid
+    SPI.i_reset is invalid
+    SPI.i_clk is invalid
+    io.o_spi_mosi <= SPI.o_spi_mosi @[Main.scala 35:8]
+    io.o_spi_sck <= SPI.o_spi_sck @[Main.scala 35:8]
+    io.o_spi_cs_n <= SPI.o_spi_cs_n @[Main.scala 35:8]
+    SPI.o_wb_data <= io.o_wb_data @[Main.scala 35:8]
+    io.o_wb_ack <= SPI.o_wb_ack @[Main.scala 35:8]
+    io.o_wb_stall <= SPI.o_wb_stall @[Main.scala 35:8]
+    SPI.i_wb_data <= io.i_wb_data @[Main.scala 35:8]
+    SPI.i_wb_adder <= io.i_wb_adder @[Main.scala 35:8]
+    SPI.i_wb_we <= io.i_wb_we @[Main.scala 35:8]
+    SPI.i_cfg_stb <= io.i_cfg_stb @[Main.scala 35:8]
+    SPI.i_wb_stb <= io.i_wb_stb @[Main.scala 35:8]
+    SPI.i_wb_cyc <= io.i_wb_cyc @[Main.scala 35:8]
+    SPI.i_reset <= io.i_reset @[Main.scala 35:8]
+    SPI.i_clk <= io.i_clk @[Main.scala 35:8]
     

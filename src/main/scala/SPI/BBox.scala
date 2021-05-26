@@ -30,6 +30,15 @@ class BlackBoxAdder extends BlackBox with HasBlackBoxInline{
 class BBox extends Module{
     val io = IO (new IOs)
 
+    val BBAdder = Module(new BlackBoxAdder)
+
+    BBAdder.io.in1 := io.in1
+    BBAdder.io.in2 := io.in2
+
+    io.out := BBAdder.io.out
+}
+
+
 
 
     // val io = IO (new Bundle() {
@@ -39,10 +48,3 @@ class BBox extends Module{
         // val out = Output ( UInt (32. W ) )
         // val ioo = Module(new BlackBoxAdder)
     // })
-    val BBAdder = Module(new BlackBoxAdder)
-
-    BBAdder.io.in1 := io.in1
-    BBAdder.io.in2 := io.in2
-
-    io.out := BBAdder.io.out
-}
