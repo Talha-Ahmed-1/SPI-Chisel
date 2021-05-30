@@ -7,11 +7,10 @@ import chiseltest._
 import chisel3.experimental.BundleLiterals._
 import chiseltest.experimental.TestOptionBuilder._
 import chiseltest.internal.VerilatorBackendAnnotation
-import org.scalatest.flatspec.AnyFlatSpec
 
-class SPITests extends AnyFlatSpec with ChiselScalatestTester {
+class SPITests extends FreeSpec with ChiselScalatestTester {
 
-  "SPI" should "work" in {
+  "SPI" in {
     test(new SPI).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
         c.io.in.bits.poke(3.U)
         c.io.in.valid.poke(1.B)

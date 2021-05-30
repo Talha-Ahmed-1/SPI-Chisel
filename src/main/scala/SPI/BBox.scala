@@ -20,7 +20,9 @@ class BlackBoxAdder extends BlackBox with HasBlackBoxInline{
     | input [32:0] in2 ,
     | output [33:0] out
     |) ;
-    | assign out = ((in1) + (in2));
+    | always @* begin
+    | out <= ((in1) + (in2));
+    | end
     | endmodule
     """.stripMargin )
 }
