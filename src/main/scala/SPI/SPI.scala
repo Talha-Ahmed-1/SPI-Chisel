@@ -94,7 +94,6 @@ class SPI extends Module{
 
     val RxSR = Module(new RxShiftRegister)
     buffer.io.in.bits := RxSR.io.out
-    RxSR.io.in := 123.U
     io.out1 := buffer.io.out.bits
 
 

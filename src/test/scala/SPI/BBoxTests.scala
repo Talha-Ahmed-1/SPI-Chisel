@@ -7,9 +7,8 @@ import chiseltest._
 import chisel3.experimental.BundleLiterals._
 import chiseltest.experimental.TestOptionBuilder._
 import chiseltest.internal.VerilatorBackendAnnotation
-import org.scalatest.freespec.AnyFreeSpec
 
-class BBoxTests extends AnyFreeSpec with ChiselScalatestTester {
+class BBoxTests extends FreeSpec with ChiselScalatestTester {
 
   "BlackBox" in {
     test(new BBox).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
