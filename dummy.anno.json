@@ -5,8 +5,8 @@
   },
   {
     "class":"firrtl.transforms.BlackBoxResourceAnno",
-    "target":"dummy.BlackBoxSpi",
-    "resourceId":"/vsrc/spii.v"
+    "target":"dummy.spixpress",
+    "resourceId":"/vsrc/spixpress.v"
   },
   {
     "class":"firrtl.transforms.BlackBoxTargetDirAnno",
