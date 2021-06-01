@@ -82,7 +82,7 @@
 //
 `default_nettype	none
 // }}}
-module	spixpress #(
+module	spixpress // #(
 		// {{{
 		// OPT_PIPE
 		// {{{
@@ -93,7 +93,7 @@ module	spixpress #(
 		// Random access performance:	65+64(N-1)
 		// Performance when piped:	65+32(N-1)
 		//
-		parameter [0:0]	OPT_PIPE = 1'b1,
+		// parameter [0:0]	OPT_PIPE = 1'b1,
 		// }}}
 		// OPT_CFG
 		// {{{
@@ -104,12 +104,12 @@ module	spixpress #(
 		// flash.  Since the access is arbitrary, other flash features
 		// are supported as well such as programming or reading the
 		// one-time-programmable memory or more.
-		parameter [0:0]	OPT_CFG  = 1'b1
+		// parameter [0:0]	OPT_CFG  = 1'b1
 		// }}}
 		// }}}
-	) (
+	// ) (
 		// {{{
-		input	wire		i_clk, i_reset,
+		(input	wire		i_clk, i_reset,
 		//
 		input	wire		i_wb_cyc, i_wb_stb, i_cfg_stb, i_wb_we,
 		input	wire	[21:0]	i_wb_addr,
@@ -121,7 +121,8 @@ module	spixpress #(
 		input	wire		i_spi_miso
 		// }}}
 	);
-
+	localparam [0:0]	OPT_PIPE = 1'b1;
+	localparam [0:0]	OPT_CFG  = 1'b1;
 	// Signal declarations
 	// {{{
 	reg		cfg_user_mode;
