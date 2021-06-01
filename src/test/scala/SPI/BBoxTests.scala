@@ -12,8 +12,8 @@ class BBoxTests extends FreeSpec with ChiselScalatestTester {
 
   "BlackBox" in {
     test(new BBox).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
-        c.io.in1.poke(1.U)
-        c.io.in2.poke(2.U)
+        // c.io.in1.poke(1.U)
+        // c.io.in2.poke(2.U)
         c.clock.step(20)
     }
   }

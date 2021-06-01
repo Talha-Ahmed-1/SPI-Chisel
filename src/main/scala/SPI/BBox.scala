@@ -6,45 +6,25 @@ import chisel3.experimental._
 
 
 class IOs extends Bundle{
-    val in1 = Input ( UInt (32. W ) )
-    val in2 = Input ( UInt (32. W ) )
-    val out = Output ( UInt (32. W ) )
+    val clk = Input(Bool())
+    val rst = Input(Bool())
+    val miso = Input(Bool())
+    val mosi = Output(Bool())
+    val sck = Output(Bool())
+    val start = Input(Bool())
+    val data_in = Input(SInt(8.W))
+    val data_out = Output(SInt(8.W))
+    val output = Output(Bool())
+    val new_data = Output(Bool())
 }
-
-class BlackBoxAdder extends BlackBox with HasBlackBoxInline{
-    val io = IO (new IOs)
-    setInline ("BlackBoxAdder.v" ,
-    s"""
-    | module BlackBoxAdder (
-    | input [32:0] in1 ,
-    | input [32:0] in2 ,
-    | output [33:0] out
-    |) ;
-    | always @* begin
-    | out <= ((in1) + (in2));
-    | end
-    | endmodule
-    """.stripMargin )
+class spi_t extends BlackBox with HasBlackBoxResource{
+    val io = IO(new IOs)
+    addResource("/vsrc/spi_t.v")
 }
 
 class BBox extends Module{
-    val io = IO (new IOs)
+    val io = IO(new IOs)
+    val spi = Module(new spi_t)
+    spi.io <> io
 
-    val BBAdder = Module(new BlackBoxAdder)
-
-    BBAdder.io.in1 := io.in1
-    BBAdder.io.in2 := io.in2
-
-    io.out := BBAdder.io.out
 }
-
-
-
-
-    // val io = IO (new Bundle() {
-        
-        // val in1 = Input ( UInt (32. W ) )
-        // val in2 = Input ( UInt (32. W ) )
-        // val out = Output ( UInt (32. W ) )
-        // val ioo = Module(new BlackBoxAdder)
-    // })
