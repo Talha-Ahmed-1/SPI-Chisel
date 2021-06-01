@@ -14,7 +14,7 @@ class IOs extends Bundle{
     val start = Input(Bool())
     val data_in = Input(SInt(8.W))
     val data_out = Output(SInt(8.W))
-    val output = Output(Bool())
+    val busy = Output(Bool())
     val new_data = Output(Bool())
 }
 class spi_t extends BlackBox with HasBlackBoxResource{
