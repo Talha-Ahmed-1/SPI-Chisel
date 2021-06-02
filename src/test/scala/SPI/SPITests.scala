@@ -16,6 +16,12 @@ class SPITests extends FreeSpec with ChiselScalatestTester {
         c.io.start.poke(1.B)
         c.clock.step(1)
         c.io.start.poke(0.B)
+        c.io.miso.poke(1.B)
+        c.clock.step(1)
+        c.io.miso.poke(1.B)
+        c.clock.step(1)
+        c.io.miso.poke(0.B)
+        c.clock.step(1)
         c.clock.step(20)
     }
   }
