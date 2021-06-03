@@ -5,26 +5,6 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.ChiselEnum
 
-// class SPI_Wrapper extends Module{
-//     val io = IO(new Bundle{
-//         val miso = Input(Bool())
-//         val mosi = Output(Bool())
-//         val ss = Output(Bool())
-//         val sck = Output(Clock())
-
-//         val data_in := Flipped(Decoupled(SInt(8.W)))
-//         val data_out := Decoupled(SInt(8.W))
-//     })
-//     val spi = Module(new SPI)
-//     spi.io.miso := io.miso
-//     io.mosi := spi.io.mosi
-//     io.ss := spi.io.ss
-//     io.sck := spi.io.sck
-
-
-
-// }
-
 
 class SPI_IO extends Bundle{
     val miso = Input(Bool())
