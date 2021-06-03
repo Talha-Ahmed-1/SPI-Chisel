@@ -5,17 +5,34 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.ChiselEnum
 
+// class SPI_Wrapper extends Module{
+//     val io = IO(new Bundle{
+//         val miso = Input(Bool())
+//         val mosi = Output(Bool())
+//         val ss = Output(Bool())
+//         val sck = Output(Clock())
+
+//         val data_in := Flipped(Decoupled(SInt(8.W)))
+//         val data_out := Decoupled(SInt(8.W))
+//     })
+//     val spi = Module(new SPI)
+//     spi.io.miso := io.miso
+//     io.mosi := spi.io.mosi
+//     io.ss := spi.io.ss
+//     io.sck := spi.io.sck
+
+
+
+// }
+
+
 class SPI_IO extends Bundle{
     val miso = Input(Bool())
     val mosi = Output(Bool())
     val ss = Output(Bool())
     val sck = Output(Clock())
-    val start = Input(Bool())
-    val get = Output(Bool())
-    val data_in = Input(SInt(8.W))
-    val data_out = Output(SInt(8.W))
-    // val busy = Output(Bool())
-    // val new_data = Output(Bool())
+    val data_in = Flipped(Decoupled(SInt(8.W)))
+    val data_out = Decoupled(SInt(8.W))
 }
 
 class SPI(implicit val config: Config) extends Module{
@@ -30,23 +47,26 @@ class SPI(implicit val config: Config) extends Module{
         val dataReg = RegInit(0.S(8.W))
 
         io.sck := clock
-        io.get := 0.B
-        io.data_out := 0.S
+
+        io.data_in.ready := 0.B
+        io.data_out.valid := 0.B
+        io.data_out.bits := 0.S
         io.ss := 1.B
         io.mosi := 0.B
 
         // Transmission
         switch(state){
             is(idle){
-                when (io.start){
+                when (io.data_in.valid){
+                    io.data_in.ready := 1.B
                     io.ss := 0.B
-                    dataReg := io.data_in
+                    dataReg := io.data_in.bits
                     state := busy
-                    // miso_dataReg := miso_dataReg << 1 | io.miso
                 }
             }
             is(busy){
                 when (count === 8.U){
+                    io.data_in.ready := 0.B
                     io.ss := 1.B
                     state := idle
                     count := 0.U
@@ -55,7 +75,6 @@ class SPI(implicit val config: Config) extends Module{
                     io.mosi := dataReg(0)
                     dataReg := dataReg >> 1
                     count := count + 1.U
-                    // miso_dataReg := miso_dataReg << 1 | io.miso
                 }
             }
         }
@@ -64,9 +83,10 @@ class SPI(implicit val config: Config) extends Module{
         val count1 = RegInit(0.U(4.W))
         switch(state){
             is(busy){
-                when (count === 8.U){
-                    io.data_out := Reverse(miso_dataReg).asSInt
-                    io.get := 1.B
+                io.ss := 0.B
+                when (count === 8.U & io.data_out.ready){
+                    io.data_out.bits := Reverse(miso_dataReg).asSInt
+                    io.data_out.valid := 1.B
                     count1 := 0.U
                 }.otherwise{
                     miso_dataReg := miso_dataReg << 1 | io.miso
