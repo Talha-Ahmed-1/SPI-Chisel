@@ -8,6 +8,42 @@ object Main extends App{
     println((new chisel3.stage.ChiselStage).emitVerilog(new dummy))
 }
 
+class Adder extends Module{
+    val io = IO(new Bundle{
+        val a = Input(UInt(32.W))
+        val b = Input(UInt(32.W))
+        val out = Output(UInt(32.W))
+    })
+    io.out := io.a + io.b
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // class Interface3 extends Bundle{
 //     val i_clk = Input(Bool())
 //     val i_reset = Input(Bool())
