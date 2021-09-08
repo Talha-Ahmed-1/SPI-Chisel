@@ -31,9 +31,9 @@ module spi_master
 	output	reg							cs_n		,	//spi bus slave select line
 	output								mosi		,	//spi bus mosi output
 	output	reg							finish		,	//a pluse to indicate the SPI transmission finish and the data_out valid
-	output	reg [DATA_WIDTH-1:0]		data_out	 	//the data received by miso,valid when the finish is high
+	output	reg [DATA_WIDTH-1:0]		data_out	, 	//the data received by miso,valid when the finish is high
 
-	// output								spi_ready	,	//spi is ready to give output
+	output								spi_ready		//spi is ready
 );
 
 localparam	FREQUENCE_CNT	= CLK_FREQUENCE/SPI_FREQUENCE - 1	,
@@ -133,6 +133,8 @@ always @(*) begin
 end
 
 // Initialize ready signal
+// assign spi_ready = (cstate == IDLE)? 1'b1:1'b0;
+
 // assign  if(cstate == IDLE)
 // 			ready = 1'b1
 // 		else
