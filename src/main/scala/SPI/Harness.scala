@@ -27,10 +27,14 @@ class Harness extends Module{
     val rst_wire = WireInit(~reset.asUInt()(0))
 
     spiMain.io.clk := clk_wire.asClock()
-    spiMain.io.rst_n := rst_wire.asAsyncReset()
+    spiMain.io.rst_n := rst_wire
+    // spiMain.io.rst_n := 0.B
+    // spiMain.io.rst_n := 1.B
 
     spiSlave.io.clk := clk_wire.asClock()
-    spiSlave.io.rst_n := rst_wire.asAsyncReset()
+    spiSlave.io.rst_n := rst_wire
+    // spiSlave.io.rst_n := 0.B
+    // spiSlave.io.rst_n := 1.B
 
     io.data_out := spiMain.io.data_out
     io.finish := spiMain.io.finish

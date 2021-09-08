@@ -6,10 +6,11 @@ import chisel3.experimental._
 
 class Interfaces extends Bundle{
     val clk = Input(Clock())
-    val rst_n = Input(Reset())
+    val rst_n = Input(Bool())
 
     val data_in = Input(UInt(32.W))
     val start = Input(Bool())
+    val spi_ready = Output(Bool())
     val data_out = Output(UInt(32.W))
     val finish = Output(Bool())
 

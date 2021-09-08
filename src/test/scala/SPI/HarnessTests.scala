@@ -51,7 +51,7 @@ class HarnessTests extends FreeSpec with ChiselScalatestTester {
         // c.clock.step(1)
         // c.io.clk.poke(0.B)
 
-        c.clock.step(500)
+        c.clock.step(1000)
     }
   }
 }
