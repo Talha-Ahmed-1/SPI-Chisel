@@ -7,10 +7,14 @@ import chisel3.experimental._
 class Wrap_IO extends Bundle{
     val dataRequest = Flipped(Decoupled(UInt(32.W)))
     val addrRequest = Input(UInt(32.W))
+    val activeByteLane = Input(UInt(32.W))
     val isWrite = Input(Bool())
 
     val dataResponse = Decoupled(UInt(32.W))
     val ackWrite = Output(Bool())
+
+    // val clk = Input(Clock())
+    // val rst_n = Input(Bool())
 
     val cs_n = Output(Bool())
     val sclk = Output(Bool())
@@ -22,16 +26,31 @@ class SpiWrapper extends Module{
     val io = IO(new Wrap_IO)
     val spiMaster = Module(new SpiMain)
 
-    spiMaster.io.data_in := io.dataRequest.bits
+    // Bus Interface
+    spiMaster.io.data_in := io.dataRequest.bits// & io.activeByteLane
     spiMaster.io.start := RegNext(io.dataRequest.valid)
     io.dataRequest.ready := spiMaster.io.spi_ready
 
     // TODO: addrRequest and isWrite 
 
     io.dataResponse.bits := Mux(~io.dataResponse.ready & ~spiMaster.io.finish, spiMaster.io.data_out, DontCare)
-    
+    io.dataResponse.valid := spiMaster.io.finish
+
     // TODO: ackWrite
     io.ackWrite := DontCare
+
+    // SPI Pins
+    val clk_wire = WireInit(~clock.asUInt()(0))
+    val rst_wire = WireInit(~reset.asUInt()(0))
+
+    spiMaster.io.clk := clk_wire.asClock()
+    spiMaster.io.rst_n := rst_wire
+
+    io.cs_n := spiMaster.io.cs_n
+    io.sclk := spiMaster.io.sclk
+    io.mosi := spiMaster.io.mosi
+    
+    spiMaster.io.miso := io.miso
 
 
 }

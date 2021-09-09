@@ -17,7 +17,7 @@ module spi_master
 #(
 	parameter	CLK_FREQUENCE	= 50_000_000		,	//system clk frequence
 				SPI_FREQUENCE	= 5_000_000			,	//spi clk frequence
-				DATA_WIDTH		= 32					,	//serial word length
+				DATA_WIDTH		= 32				,	//serial word length
 				CPOL			= 0					,	//SPI mode selection (mode 0 default)
 				CPHA			= 0					 	//CPOL = clock polarity, CPHA = clock phase
 )

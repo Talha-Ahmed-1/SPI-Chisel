@@ -20,7 +20,12 @@ class Interfaces extends Bundle{
     val miso = Input(Bool())
 
 }
-class spi_master extends BlackBox with HasBlackBoxResource{
+class spi_master extends BlackBox//(
+    // Map(//"DATA_WIDTH" -> "31",
+    //     "CPOL" -> "0",
+    //     "CPHA" -> "0")) 
+    with HasBlackBoxResource{
+
     val io = IO(new Interfaces)
     addResource("/vsrc/spi_master.v")
 }

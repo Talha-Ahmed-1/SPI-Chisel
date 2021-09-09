@@ -12,41 +12,12 @@ import chiseltest.internal.VerilatorBackendAnnotation
 
 
 
-class SpiMainTests extends FreeSpec with ChiselScalatestTester {
+class SpiWrapperTests extends FreeSpec with ChiselScalatestTester {
 
   "Spi Wrapper" in {
-    test(new SpiMain()).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
-        // c.io.a.poke(44.U)
-        // c.io.b.poke(99.U)
-        // c.io.i_clk.poke(Clock().asInstanceOf[Bool])
+    test(new SpiWrapper()).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
         
-        // c.io.clk.poke(clock.asUInt()(0).asClock())
-        // c.io.rst_n.poke(0.B)
-        // c.io.data_in.poke(8.U)
-        // c.io.start.poke(1.B)
-
-
-        // c.io.clk.poke(1.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(0.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(1.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(0.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(1.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(0.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(1.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(0.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(1.B)
-        // c.clock.step(1)
-        // c.io.clk.poke(0.B)
-
-        c.clock.step(20)
+        c.clock.step(100)
     }
   }
 }
