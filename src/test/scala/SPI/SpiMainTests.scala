@@ -15,6 +15,7 @@ import chiseltest.internal.VerilatorBackendAnnotation
 class SpiMainTests extends FreeSpec with ChiselScalatestTester {
 
   "Spi Main" in {
+    implicit val config = Config()
     test(new SpiMain()).withAnnotations(Seq(VerilatorBackendAnnotation)) { c =>
         // c.io.a.poke(44.U)
         // c.io.b.poke(99.U)

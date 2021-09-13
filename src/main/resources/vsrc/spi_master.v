@@ -15,8 +15,9 @@
 
 module spi_master
 #(
-	parameter	CLK_FREQUENCE	= 50_000_000		,	//system clk frequence
-				SPI_FREQUENCE	= 5_000_000			,	//spi clk frequence
+	parameter	FREQUENCE		= 10				,
+				// CLK_FREQUENCE	= 50_000_000		,	//system clk frequence
+				// SPI_FREQUENCE	= 5_000_000			,	//spi clk frequence
 				DATA_WIDTH		= 32				,	//serial word length
 				CPOL			= 0					,	//SPI mode selection (mode 0 default)
 				CPHA			= 0					 	//CPOL = clock polarity, CPHA = clock phase
@@ -36,7 +37,7 @@ module spi_master
 	output								spi_ready		//spi is ready
 );
 
-localparam	FREQUENCE_CNT	= CLK_FREQUENCE/SPI_FREQUENCE - 1	,
+localparam	FREQUENCE_CNT	= FREQUENCE - 1	,
 			SHIFT_WIDTH		= log2(DATA_WIDTH)					,
 			CNT_WIDTH		= log2(FREQUENCE_CNT)				;
 

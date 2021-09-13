@@ -18,7 +18,10 @@ class SPI_IO extends Bundle{
 class SPI(implicit val config: Config) extends Module{
     val io = IO(new SPI_IO)
     
-    if (!config.CPOL & !config.CPHA){
+    val CPOL = false
+    val CPHA = false
+
+    if (CPOL & CPHA){
         val idle :: busy :: Nil = Enum(2)
         val state = RegInit(idle)
 

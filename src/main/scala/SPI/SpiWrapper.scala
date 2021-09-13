@@ -4,13 +4,13 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental._
 
-class Wrap_IO extends Bundle{
-    val dataRequest = Flipped(Decoupled(UInt(32.W)))
-    val addrRequest = Input(UInt(32.W))
-    val activeByteLane = Input(UInt(32.W))
+class Wrap_IO(DW:Int) extends Bundle{
+    val dataRequest = Flipped(Decoupled(UInt(DW.W)))
+    val addrRequest = Input(UInt(DW.W))
+    val activeByteLane = Input(UInt(DW.W))
     val isWrite = Input(Bool())
 
-    val dataResponse = Decoupled(UInt(32.W))
+    val dataResponse = Decoupled(UInt(DW.W))
     val ackWrite = Output(Bool())
 
     // val clk = Input(Clock())
@@ -22,12 +22,12 @@ class Wrap_IO extends Bundle{
     val miso = Input(Bool())
 }
 
-class SpiWrapper extends Module{
-    val io = IO(new Wrap_IO)
-    val spiMaster = Module(new SpiMain)
+class SpiWrapper(implicit val config: Config) extends Module{
+    val io = IO(new Wrap_IO(config.DW))
+    val spiMaster = Module(new SpiMain())
 
     // Bus Interface
-    spiMaster.io.data_in := io.dataRequest.bits// & io.activeByteLane
+    spiMaster.io.data_in := io.dataRequest.bits & io.activeByteLane
     spiMaster.io.start := RegNext(io.dataRequest.valid)
     io.dataRequest.ready := spiMaster.io.spi_ready
 
