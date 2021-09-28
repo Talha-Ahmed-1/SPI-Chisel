@@ -21,9 +21,8 @@ class Interfaces(DW:Int) extends Bundle{
 
 }
 class spi_master(implicit val config: Config) extends BlackBox(
-    Map(//"CLK_FREQUENCE" -> config.CLK_FREQUENCE,
-        //"SPI_FREQUENCE" -> config.SPI_FREQUENCE,
-        "FREQUENCE"     -> config.FREQUENCE,
+    Map("CLK_FREQUENCE" -> config.CLK_FREQUENCE,
+        "SPI_FREQUENCE" -> config.SPI_FREQUENCE,
         "DATA_WIDTH"    -> config.DW,
         "CPOL"          -> config.CPOL,
         "CPHA"          -> config.CPHA)) 
