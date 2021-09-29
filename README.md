@@ -1,4 +1,5 @@
 Chisel Project Template
+Spi Flash Interface in Chisel
 =======================
 
 You've done the [Chisel Bootcamp](https://github.com/freechipsproject/chisel-bootcamp), and now you
